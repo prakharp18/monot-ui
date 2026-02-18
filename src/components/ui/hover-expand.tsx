@@ -1,11 +1,15 @@
-import React, { useEffect, useState, type ReactNode } from "react"
+import React, { useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
+import { useNavigate } from "react-router-dom"
 
 export interface PanelItem {
   label: string
-  component: ReactNode
-  bg?: string
+  description: string
+  preview: ReactNode
+  route: string
 }
+
+import type { ReactNode } from "react"
 
 interface HoverExpandProps {
   panels: PanelItem[]
@@ -21,26 +25,7 @@ export default function HoverExpand({
   const [selectedIndex, setSelectedIndex] =
     useState<number>(initialSelectedIndex)
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setIsModalOpen(false)
-      }
-    }
-
-    if (isModalOpen) {
-      document.body.classList.add("overflow-hidden")
-      document.addEventListener("keydown", handleKeyDown)
-    } else {
-      document.body.classList.remove("overflow-hidden")
-    }
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown)
-      document.body.classList.remove("overflow-hidden")
-    }
-  }, [isModalOpen])
+  const navigate = useNavigate()
 
   return (
     <div className="relative">
@@ -49,10 +34,10 @@ export default function HoverExpand({
         {panels.slice(0, maxThumbnails).map((panel, i) => (
           <div
             key={`panel-container-${i}`}
-            className={`group relative overflow-hidden rounded-2xl transition-all duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] ${
+            className={`group relative overflow-hidden rounded-2xl transition-all duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] border ${
               selectedIndex === i
-                ? "w-[340px] h-[400px]"
-                : "w-4 sm:w-5 md:w-8 xl:w-12 h-[400px]"
+                ? "w-[340px] h-[400px] border-white/20"
+                : "w-4 sm:w-5 md:w-8 xl:w-12 h-[400px] border-white/5"
             }`}
             onMouseEnter={() => setSelectedIndex(i)}
             onMouseLeave={() => setSelectedIndex(i)}
@@ -65,19 +50,21 @@ export default function HoverExpand({
               layoutId={`panel-${i}`}
               className="absolute inset-0 size-full"
             >
-              <div className="size-full overflow-hidden bg-black">
-                {panel.component}
+              {/* Static preview */}
+              <div className="size-full overflow-hidden bg-black flex items-center justify-center">
+                {panel.preview}
               </div>
+
               {/* Label overlay at bottom */}
               <div
                 className={`absolute bottom-0 left-0 right-0 p-4 transition-opacity duration-300 ${
                   selectedIndex === i ? "opacity-100" : "opacity-0"
                 }`}
                 style={{
-                  background: 'linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%)',
+                  background: 'linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 100%)',
                 }}
               >
-                <span className="font-mono text-xs text-zinc-400 tracking-widest uppercase">
+                <span className="font-mono text-[11px] text-zinc-400 tracking-[0.2em] uppercase block">
                   {panel.label}
                 </span>
               </div>
@@ -86,7 +73,7 @@ export default function HoverExpand({
         ))}
       </div>
 
-      {/* Modal */}
+      {/* Modal — shows description + static preview + "View Live" button */}
       <AnimatePresence>
         {isModalOpen && (
           <motion.div
@@ -98,27 +85,37 @@ export default function HoverExpand({
           >
             <div
               onClick={(e: React.MouseEvent) => e.stopPropagation()}
-              className="cursor-pointer overflow-hidden rounded-2xl bg-black border border-zinc-800"
+              className="overflow-hidden rounded-2xl bg-zinc-950 border border-white/10"
+              style={{ maxWidth: 500 }}
             >
               <motion.div
                 layoutId={`panel-${selectedIndex}`}
                 className="relative"
-                style={{ width: 600, height: 500 }}
+                style={{ width: 500, height: 340 }}
               >
-                <div className="size-full overflow-hidden">
-                  {panels[selectedIndex]?.component}
-                </div>
-                <div
-                  className="absolute bottom-0 left-0 right-0 p-6"
-                  style={{
-                    background: 'linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 100%)',
-                  }}
-                >
-                  <span className="font-mono text-sm text-white tracking-widest uppercase">
-                    {panels[selectedIndex]?.label}
-                  </span>
+                <div className="size-full overflow-hidden bg-black flex items-center justify-center">
+                  {panels[selectedIndex]?.preview}
                 </div>
               </motion.div>
+
+              {/* Info section */}
+              <div className="p-6 flex flex-col gap-3">
+                <h3 className="font-mono text-sm text-white tracking-[0.15em] uppercase">
+                  {panels[selectedIndex]?.label}
+                </h3>
+                <p className="text-zinc-500 text-sm leading-relaxed">
+                  {panels[selectedIndex]?.description}
+                </p>
+                <button
+                  onClick={() => {
+                    setIsModalOpen(false)
+                    navigate(panels[selectedIndex]?.route)
+                  }}
+                  className="mt-2 self-start font-mono text-xs tracking-[0.2em] uppercase px-5 py-2.5 border border-white/20 text-white rounded-lg hover:bg-white hover:text-black transition-all duration-300 cursor-pointer"
+                >
+                  View Live →
+                </button>
+              </div>
             </div>
           </motion.div>
         )}
