@@ -2,16 +2,67 @@ import { useState } from 'react';
 import { Preloader } from '@/components/ui/preloader';
 import FlipLink from '@/components/ui/text-effect-flipper';
 import HoverExpand from '@/components/ui/hover-expand';
+import type { PanelItem } from '@/components/ui/hover-expand';
+import { AsciiRain } from '@/components/ascii/AsciiRain';
+import { AsciiOrbit } from '@/components/ascii/AsciiOrbit';
 
-const images = [
-  "https://images.pexels.com/photos/30082445/pexels-photo-30082445.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-  "https://images.unsplash.com/photo-1692606743169-e1ae2f0a960f?q=80&w=3560&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-  "https://assets.lummi.ai/assets/QmQLSBeCFHUwCv7WBpGr7T3P67UXaAw8B2vvmtKimyinrL?auto=format&w=1500",
-  "https://assets.lummi.ai/assets/QmXe6v7jBF5L2R7FCio8KQdXwTX2uqzRycUJapyjoXaTqd?auto=format&w=1500",
-  "https://assets.lummi.ai/assets/QmNfwUDpehZyLWzE8to7QzgbJ164S6fQy8JyUWemHtmShj?auto=format&w=1500",
-  "https://images.unsplash.com/photo-1706049379414-437ec3a54e93?q=80&w=1200&auto=format",
-  "https://assets.lummi.ai/assets/Qmb2P6tF2qUaFXnXpnnp2sk9HdVHNYXUv6MtoiSq7jjVhQ?auto=format&w=1500",
-  "https://images.unsplash.com/photo-1508873881324-c92a3fc536ba?q=80&w=1200&auto=format",
+const panels: PanelItem[] = [
+  {
+    label: 'Rain // Matrix Cascade',
+    component: <AsciiRain speed={45} density={0.9} color="#00ff41" fadeSteps={14} />,
+  },
+  {
+    label: 'Rain // Amber Terminal',
+    component: <AsciiRain speed={60} density={0.85} color="#ffb300" fadeSteps={10} charset="01" />,
+  },
+  {
+    label: 'Orbit // Default',
+    component: <AsciiOrbit size={380} />,
+  },
+  {
+    label: 'Rain // Cyan Storm',
+    component: <AsciiRain speed={35} density={0.95} color="#00e5ff" fadeSteps={16} />,
+  },
+  {
+    label: 'Orbit // Minimal',
+    component: (
+      <AsciiOrbit
+        size={380}
+        centerSymbol="◎"
+        glowColor="#ff00ff"
+        rings={[
+          { radius: 50, chars: '·•●', count: 5, speed: 1.5, color: '#ff69b4' },
+          { radius: 90, chars: '○◌◯', count: 8, speed: 0.9, reverse: true, color: '#da70d6' },
+          { radius: 125, chars: '◦∘⊚', count: 12, speed: 0.4, color: '#9370db' },
+        ]}
+      />
+    ),
+  },
+  {
+    label: 'Rain // Red Alert',
+    component: <AsciiRain speed={30} density={1} color="#ff1744" fadeSteps={12} charset="!@#$%^&*DANGER" />,
+  },
+  {
+    label: 'Orbit // Solar System',
+    component: (
+      <AsciiOrbit
+        size={380}
+        centerSymbol="☀"
+        glowColor="#ffab00"
+        rings={[
+          { radius: 35, chars: '☿', count: 1, speed: 2.5, color: '#aaa' },
+          { radius: 55, chars: '♀', count: 1, speed: 1.8, color: '#ffcc80' },
+          { radius: 75, chars: '⊕', count: 1, speed: 1.2, color: '#64b5f6' },
+          { radius: 100, chars: '♂', count: 1, speed: 0.8, color: '#ef5350' },
+          { radius: 130, chars: '♃', count: 1, speed: 0.4, reverse: true, color: '#ff8a65' },
+        ]}
+      />
+    ),
+  },
+  {
+    label: 'Rain // Ghost Protocol',
+    component: <AsciiRain speed={70} density={0.7} color="#b388ff" fadeSteps={20} charset="ψΩαβγδεζηθ" />,
+  },
 ];
 
 export const DashboardPage = () => {
@@ -46,13 +97,11 @@ export const DashboardPage = () => {
 
             </div>
 
-            {/* Hero Section — HoverExpand */}
+            {/* Hero Section — HoverExpand with ASCII components */}
             <HoverExpand
-              images={images}
+              panels={panels}
               initialSelectedIndex={0}
-              thumbnailHeight={450}
-              modalImageSize={800}
-              maxThumbnails={11}
+              maxThumbnails={8}
             />
 
           </div>
