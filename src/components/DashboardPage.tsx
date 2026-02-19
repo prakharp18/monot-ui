@@ -1,50 +1,104 @@
 import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Preloader } from '@/components/ui/preloader';
 import FlipLink from '@/components/ui/text-effect-flipper';
 import HoverExpand from '@/components/ui/hover-expand';
 import type { PanelItem } from '@/components/ui/hover-expand';
 
-const FacePreview = () => (
-  <div className="flex items-center justify-center w-full h-full">
-    <span className="font-mono text-4xl text-zinc-300">(•‿•)</span>
-  </div>
-)
-
-const BouncePreview = () => (
-  <div className="flex items-center justify-center w-full h-full">
-    <pre className="font-mono text-2xl text-zinc-300 tracking-[0.15em]">
-      {'     •              '}
-    </pre>
+const P = ({ children }: { children: React.ReactNode }) => (
+  <div className="flex items-center justify-center w-full h-full bg-zinc-950">
+    <span className="font-mono text-2xl text-zinc-400 whitespace-pre text-center leading-none">{children}</span>
   </div>
 )
 
 const panels: PanelItem[] = [
   {
     label: 'Face',
-    description: 'A minimal face that gently blinks and subtly breathes to feel alive. Randomized blink intervals and a soft scale oscillation give it an organic, living presence.',
-    preview: <FacePreview />,
+    description: 'Personality Engine. An expressive face with multiple modes: blink, wink, think, sleep, tilt, and calm drift. Builds emotional connection.',
+    preview: <P>(•‿•)</P>,
     route: '/component/face',
   },
   {
-    label: 'Bounce',
-    description: 'A horizontal bouncing dot moving left to right across a clean track to indicate motion and direction. Minimal and hypnotic.',
-    preview: <BouncePreview />,
-    route: '/component/bounce',
+    label: 'Arrow',
+    description: 'Moving Arrow. Continuous directional flow with a fading trail. Indicates forward motion without interruption.',
+    preview: <P>→ →→</P>,
+    route: '/component/arrow',
+  },
+  {
+    label: 'Magnetic',
+    description: 'Magnetic Cursor. Dots converge to center then expand. Represents focus, attraction, grouping, or selection.',
+    preview: <P>{'•   •\n  •  \n•   •'}</P>,
+    route: '/component/magnetic',
+  },
+  {
+    label: 'Path',
+    description: 'Path Tracer. Progressive route drawing. Ideal for loading states, navigation steps, or workflow planning.',
+    preview: <P>. .. ...</P>,
+    route: '/component/path',
+  },
+  {
+    label: 'Beam',
+    description: 'Scanning Beam. A light sweep illusion moving through a solid block. Perfect for searching or indexing states.',
+    preview: <P>[██░░]</P>,
+    route: '/component/beam',
+  },
+  {
+    label: 'Ripple',
+    description: 'Soft Ripple. Expands outward then resets. A gentle emitter for signals, broadcasts, or interaction feedback.',
+    preview: <P>{'  ○  \n○   ○'}</P>,
+    route: '/component/ripple',
+  },
+  {
+    label: 'Orbit',
+    description: 'Orbiting Dot. A single dot circling a center point. Represents an active system or continuous background process.',
+    preview: <P>{'  •  \n•   •\n  ○  '}</P>,
+    route: '/component/orbit',
+  },
+  {
+    label: 'Spark',
+    description: 'Idea Spark. Small burst of characters. Represents thinking, idea generation, or AI response activation.',
+    preview: <P>✦</P>,
+    route: '/component/spark',
+  },
+  {
+    label: 'Decision',
+    description: 'Decision Split. A branch-merge loop. Represents processing choices, logic forks, or decision trees.',
+    preview: <P>{' / \\ \n \\ / '}</P>,
+    route: '/component/decision',
+  },
+  {
+    label: 'Memory',
+    description: 'Memory Recall. Center expands then contracts. Represents computation, recall, or memory access events.',
+    preview: <P>[ • ]</P>,
+    route: '/component/memory',
+  },
+  {
+    label: 'Stabilize',
+    description: 'Stabilizing Wave. A waveform settling into a stable state. Represents calibration, balancing, or system stabilization.',
+    preview: <P>~ ~ ~</P>,
+    route: '/component/stabilize',
+  },
+  {
+    label: 'Float',
+    description: 'Particle Field. Random slow drift of scattered dots. Creates a subtle, living ambient energy layer.',
+    preview: <P>{'•    \n   • '}</P>,
+    route: '/component/float',
   },
 ];
 
 export const DashboardPage = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const location = useLocation();
+  const [isLoading, setIsLoading] = useState(() => !location.state?.skipPreloader);
 
   return (
     <>
       {isLoading && <Preloader onComplete={() => setIsLoading(false)} />}
       
       {!isLoading && (
-        <div className="min-h-screen bg-black text-white p-8 pt-32 font-sans">
+        <div className="min-h-screen bg-black text-white p-8 pt-12 font-sans">
           <div className="w-full max-w-7xl mx-auto relative">
             
-            <div className="flex justify-between items-start mb-16">
+            <div className="flex justify-between items-start mb-8">
               <div className="flex flex-col items-start space-y-2">
                 <FlipLink href="#">MONOT</FlipLink>
                 <FlipLink href="#">User Interface</FlipLink>
@@ -63,7 +117,7 @@ export const DashboardPage = () => {
             <HoverExpand
               panels={panels}
               initialSelectedIndex={0}
-              maxThumbnails={2}
+              maxThumbnails={12}
             />
 
           </div>
