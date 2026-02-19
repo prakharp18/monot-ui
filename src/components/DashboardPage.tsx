@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { Preloader } from '@/components/ui/preloader';
 import FlipLink from '@/components/ui/text-effect-flipper';
 import HoverExpand from '@/components/ui/hover-expand';
+import { MobileCardStack } from '@/components/ui/mobile-card-stack';
 import type { PanelItem } from '@/components/ui/hover-expand';
 
 const P = ({ children }: { children: React.ReactNode }) => (
@@ -120,11 +121,21 @@ export const DashboardPage = () => {
               </div>
             </div>
 
-            <HoverExpand
-              panels={panels}
-              initialSelectedIndex={0}
-              maxThumbnails={12}
-            />
+
+
+            {/* Desktop View (Hover Expand) */}
+            <div className="hidden md:block">
+              <HoverExpand
+                panels={panels}
+                initialSelectedIndex={0}
+                maxThumbnails={13}
+              />
+            </div>
+
+            {/* Mobile View (Vertical Stack) */}
+            <div className="block md:hidden">
+              <MobileCardStack panels={panels} />
+            </div>
 
           </div>
         </div>
