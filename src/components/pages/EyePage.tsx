@@ -1,5 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { AsciiEye } from '@/components/ascii/AsciiEye'
+import { CodeBlock } from '@/components/ui/code-block'
+import { eyeHTML, eyeCSS, eyeJS, eyeFull } from '@/components/code/eye-code'
 
 export const EyePage = () => {
   const navigate = useNavigate()
@@ -28,6 +30,23 @@ export const EyePage = () => {
       <p className="text-zinc-600 text-xs font-mono">
         Moves with your cursor
       </p>
+
+      {/* Code */}
+      <div className="w-full max-w-2xl space-y-4">
+        <h3 className="font-mono text-xs uppercase text-zinc-500 tracking-widest pl-1">
+          Grab the Code
+        </h3>
+        <p className="text-zinc-500 text-xs leading-relaxed pl-1">
+          <span className="text-white font-medium">Full Example</span> — save as <span className="font-mono text-zinc-300">.html</span> and open in your browser. Or use the separate tabs to integrate into an existing project.
+        </p>
+        <CodeBlock tabs={[
+          { label: 'Full Example', code: eyeFull },
+          { label: 'HTML', code: eyeHTML },
+          { label: 'CSS', code: eyeCSS },
+          { label: 'JS', code: eyeJS },
+        ]} />
+      </div>
     </div>
   )
 }
+

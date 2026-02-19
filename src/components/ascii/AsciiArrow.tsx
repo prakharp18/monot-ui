@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 
 interface AsciiArrowProps {
   speed?: number
   className?: string
 }
 
-const TRAIL = ['→', '→→', '→→→', '→→', '→', ' ']
+const TRAIL = ['→', '→→', '→→→', '→→→→', '→→→→→', '→→→→', '→→→', '→→', '→', ' ']
 
 export const AsciiArrow: React.FC<AsciiArrowProps> = ({
   speed = 400,

@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AsciiFace, type FaceMode } from '@/components/ascii/AsciiFace'
+import { CodeBlock } from '@/components/ui/code-block'
+import { faceHTML, faceCSS, faceJS, faceFull } from '@/components/code/face-code'
 
 const MODES: { value: FaceMode; label: string; desc: string }[] = [
   { value: 'default', label: 'Default', desc: 'Gentle blink & breathe' },
@@ -110,12 +112,20 @@ export const FacePage = () => {
 
         </div>
 
-        {/* Code Snippet */}
-        <div className="w-full max-w-2xl p-6 rounded-xl bg-zinc-900/50 border border-zinc-800 font-mono text-xs overflow-x-auto">
-          <p className="text-zinc-500 mb-2">// Usage</p>
-          <p className="text-zinc-300">
-            {`<AsciiFace mode="${mode}" interactive={${isInteractive}} />`}
+        {/* Code */}
+        <div className="w-full max-w-2xl space-y-4">
+          <h3 className="font-mono text-xs uppercase text-zinc-500 tracking-widest pl-1">
+            Grab the Code
+          </h3>
+          <p className="text-zinc-500 text-xs leading-relaxed pl-1">
+            <span className="text-white font-medium">Full Example</span> — save as <span className="font-mono text-zinc-300">.html</span> and open in your browser. Or use the separate tabs to integrate into an existing project.
           </p>
+          <CodeBlock tabs={[
+            { label: 'Full Example', code: faceFull },
+            { label: 'HTML', code: faceHTML },
+            { label: 'CSS', code: faceCSS },
+            { label: 'JS', code: faceJS },
+          ]} />
         </div>
 
       </div>

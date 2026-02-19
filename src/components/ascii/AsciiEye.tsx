@@ -41,8 +41,7 @@ export const AsciiEye: React.FC<AsciiEyeProps> = ({
     lg: 'text-8xl',
   }
 
-  // Calculate eye look
-  // Actually, CSS translation of the pupil is smoother than character swapping
+ 
   const pupilX = pupilPos.x * 20
   const pupilY = pupilPos.y * 10
 
@@ -67,7 +66,7 @@ export const AsciiEye: React.FC<AsciiEyeProps> = ({
           className={`font-mono ${sizeClasses[size]} text-white transition-transform duration-100 ease-out`}
           style={{ transform: `translate(${pupilX}px, ${pupilY}px)` }}
         >
-          •
+         (•)
         </span>
       </div>
     </div>
