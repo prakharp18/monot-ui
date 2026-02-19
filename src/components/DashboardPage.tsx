@@ -107,8 +107,8 @@ export const DashboardPage = () => {
             
             <div className="flex flex-col md:flex-row md:justify-between items-start md:items-start gap-8 mb-12">
               <div className="flex flex-col items-start space-y-2">
-                <FlipLink href="#">MONOT</FlipLink>
-                <FlipLink href="#">User Interface</FlipLink>
+                <FlipLink href="https://monot-ui.vercel.app/">MONOT</FlipLink>
+                <FlipLink href="https://monot-ui.vercel.app/">User Interface</FlipLink>
               </div>
 
               <div className="flex flex-col gap-4 max-w-sm text-left md:text-right items-start md:items-end">
