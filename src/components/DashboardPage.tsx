@@ -19,6 +19,12 @@ const panels: PanelItem[] = [
     route: '/component/face',
   },
   {
+    label: 'Eye',
+    description: 'Cyber Eye. Reactive tracking component. A high-precision digital eye that follows your cursor everywhere.',
+    preview: <P>{'╭───╮\n│ • │\n╰───╯'}</P>,
+    route: '/component/eye',
+  },
+  {
     label: 'Arrow',
     description: 'Moving Arrow. Continuous directional flow with a fading trail. Indicates forward motion without interruption.',
     preview: <P>→ →→</P>,
@@ -98,18 +104,18 @@ export const DashboardPage = () => {
         <div className="min-h-screen bg-black text-white p-8 pt-12 font-sans">
           <div className="w-full max-w-7xl mx-auto relative">
             
-            <div className="flex justify-between items-start mb-8">
+            <div className="flex flex-col md:flex-row md:justify-between items-start md:items-start gap-8 mb-12">
               <div className="flex flex-col items-start space-y-2">
                 <FlipLink href="#">MONOT</FlipLink>
                 <FlipLink href="#">User Interface</FlipLink>
               </div>
 
-              <div className="flex flex-col gap-4 max-w-sm text-right items-end">
-                <p className="text-zinc-500 text-sm md:text-base leading-relaxed tracking-tight">
+              <div className="flex flex-col gap-4 max-w-sm text-left md:text-right items-start md:items-end">
+                <p className="text-zinc-500 text-sm leading-relaxed tracking-tight">
                   A modern ASCII UI component platform for building clean, animated text-based interfaces — fast, lightweight, and developer-ready.
                 </p>
-                <span className="text-white text-sm font-medium tracking-tight">
-                  Curated by <a className='text-white hover:text-zinc-400 transition-colors text-sm font-medium tracking-tight underline' href="https://pizzafolio.netlify.app/">@pizzat</a>
+                <span className="text-white text-xs md:text-sm font-medium tracking-tight">
+                  Curated by <a className='text-white hover:text-zinc-400 transition-colors underline' href="https://pizzafolio.netlify.app/">@pizzat</a>
                 </span>
               </div>
             </div>

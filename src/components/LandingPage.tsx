@@ -7,7 +7,7 @@ export const LandingPage = () => {
 
   return (
     <div className="min-h-screen bg-black flex flex-col items-center justify-center">
-      <h1 className="text-5xl font-bold text-white tracking-tighter mb-2">
+      <h1 className="text-4xl sm:text-5xl font-bold text-white tracking-tighter mb-2 text-center">
         Monot - UI
       </h1>
       <p className="text-zinc-500 text-lg mb-10 tracking-tight">

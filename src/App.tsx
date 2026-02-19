@@ -13,6 +13,7 @@ import { DecisionPage } from '@/components/pages/DecisionPage'
 import { MemoryPage } from '@/components/pages/MemoryPage'
 import { StabilizePage } from '@/components/pages/StabilizePage'
 import { FloatPage } from '@/components/pages/FloatPage'
+import { EyePage } from '@/components/pages/EyePage'
 import './index.css'
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
       <Route path="/component/memory" element={<MemoryPage />} />
       <Route path="/component/stabilize" element={<StabilizePage />} />
       <Route path="/component/float" element={<FloatPage />} />
+      <Route path="/component/eye" element={<EyePage />} />
     </Routes>
   )
 }

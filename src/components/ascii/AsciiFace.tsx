@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 export type FaceMode = 'default' | 'wink' | 'thinking' | 'sleep' | 'tilt' | 'calm'
 
@@ -6,16 +6,42 @@ interface AsciiFaceProps {
   className?: string
   mode?: FaceMode
   size?: 'sm' | 'md' | 'lg'
+  interactive?: boolean
 }
 
 export const AsciiFace: React.FC<AsciiFaceProps> = ({
   className = '',
   mode = 'default',
   size = 'md',
+  interactive = false,
 }) => {
+  const containerRef = useRef<HTMLDivElement>(null)
   const [frame, setFrame] = useState(0)
   const [breatheScale, setBreatheScale] = useState(1)
   const [tiltAngle, setTiltAngle] = useState(0)
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
+
+  // Mouse tracking
+  useEffect(() => {
+    if (!interactive) return
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!containerRef.current) return
+      
+      const rect = containerRef.current.getBoundingClientRect()
+      const centerX = rect.left + rect.width / 2
+      const centerY = rect.top + rect.height / 2
+      
+      // Calculate normalized position (-1 to 1)
+      const x = (e.clientX - centerX) / (window.innerWidth / 2)
+      const y = (e.clientY - centerY) / (window.innerHeight / 2)
+      
+      setMousePos({ x, y })
+    }
+
+    window.addEventListener('mousemove', handleMouseMove)
+    return () => window.removeEventListener('mousemove', handleMouseMove)
+  }, [interactive])
 
   // Breathing animation (always active unless sleeping)
   useEffect(() => {
@@ -41,7 +67,7 @@ export const AsciiFace: React.FC<AsciiFaceProps> = ({
 
   // Mode-specific animations
   useEffect(() => {
-    let interval: NodeJS.Timeout
+    let interval: any
 
     switch (mode) {
       case 'default': // Link blink
@@ -102,17 +128,28 @@ export const AsciiFace: React.FC<AsciiFaceProps> = ({
     }
   }
 
+  // Calculate transforms
+  const translateX = interactive ? mousePos.x * 20 : (mode === 'calm' ? 4 : 0) // Max 20px movement
+  const translateY = interactive ? mousePos.y * 10 : 0
+  const rotate = interactive ? mousePos.x * 10 : tiltAngle // Rotate slightly towards mouse
+
+  // Animation style
+  const animation = mode === 'calm' && !interactive 
+    ? 'drift 4s ease-in-out infinite alternate' 
+    : 'none'
+
   return (
     <div
+      ref={containerRef}
       className={`flex items-center justify-center select-none ${className}`}
       style={{ width: '100%', height: '100%' }}
     >
       <span
-        className={`font-mono ${sizeClasses[size]} text-white transition-all duration-700 ease-in-out`}
+        className={`font-mono ${sizeClasses[size]} text-white transition-all duration-300 ease-out`} // Faster transition for mouse tracking
         style={{
-          transform: `scale(${breatheScale}) rotate(${tiltAngle}deg) ${mode === 'calm' ? 'translateX(4px)' : ''}`,
+          transform: `translate(${translateX}px, ${translateY}px) scale(${breatheScale}) rotate(${rotate}deg)`,
           display: 'inline-block',
-          animation: mode === 'calm' ? 'drift 4s ease-in-out infinite alternate' : 'none'
+          animation,
         }}
       >
         {getFace()}

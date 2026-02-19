@@ -36,7 +36,7 @@ export default function HoverExpand({
             key={`panel-container-${i}`}
             className={`group relative overflow-hidden rounded-2xl transition-all duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] border ${
               selectedIndex === i
-                ? "w-[340px] h-[400px] border-white/20"
+                ? "w-[calc(100vw-80px)] sm:w-[300px] md:w-[340px] h-[400px] border-white/20"
                 : "w-4 sm:w-5 md:w-8 xl:w-12 h-[400px] border-white/5"
             }`}
             onMouseEnter={() => setSelectedIndex(i)}
@@ -51,8 +51,10 @@ export default function HoverExpand({
               className="absolute inset-0 size-full"
             >
               {/* Static preview */}
-              <div className="size-full overflow-hidden bg-black flex items-center justify-center">
-                {panel.preview}
+              <div className="size-full overflow-hidden bg-black flex items-center justify-center translate-x-[-50%] left-[50%] absolute">
+                <div className="scale-75 sm:scale-100 transition-transform">
+                  {panel.preview}
+                </div>
               </div>
 
               {/* Label overlay at bottom */}
@@ -80,21 +82,21 @@ export default function HoverExpand({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 grid place-content-center bg-black/70 backdrop-blur-md"
+            className="fixed inset-0 z-50 grid place-content-center bg-black/70 backdrop-blur-md p-4"
             onClick={() => setIsModalOpen(false)}
           >
             <div
               onClick={(e: React.MouseEvent) => e.stopPropagation()}
-              className="overflow-hidden rounded-2xl bg-zinc-950 border border-white/10"
-              style={{ maxWidth: 500 }}
+              className="overflow-hidden rounded-2xl bg-zinc-950 border border-white/10 w-full max-w-[500px]"
             >
               <motion.div
                 layoutId={`panel-${selectedIndex}`}
-                className="relative"
-                style={{ width: 500, height: 340 }}
+                className="relative aspect-video w-full"
               >
                 <div className="size-full overflow-hidden bg-black flex items-center justify-center">
-                  {panels[selectedIndex]?.preview}
+                  <div className="scale-75 sm:scale-100 transition-transform">
+                    {panels[selectedIndex]?.preview}
+                  </div>
                 </div>
               </motion.div>
 
