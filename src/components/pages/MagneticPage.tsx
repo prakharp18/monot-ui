@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AsciiMagnetic } from '@/components/ascii/AsciiMagnetic'
 import { CodeBlock } from '@/components/ui/code-block'
@@ -6,7 +5,6 @@ import { magneticHTML, magneticCSS, magneticJS, magneticFull } from '@/component
 
 export const MagneticPage = () => {
   const navigate = useNavigate()
-  const [speed, setSpeed] = useState(400)
 
   return (
     <div className="min-h-screen bg-black text-white px-6 py-24 font-sans flex flex-col items-center gap-12">
@@ -23,32 +21,17 @@ export const MagneticPage = () => {
           Magnetic Cursor
         </h1>
         <p className="text-zinc-400 text-sm max-w-sm mx-auto">
-          Dots converge to center then expand. Represents focus, attraction, grouping, or selection.
+          Dots are magnetically pulled toward your cursor. Move your mouse over the container to see the effect.
         </p>
       </div>
 
       <div className="relative w-full max-w-lg aspect-square md:aspect-video flex items-center justify-center bg-zinc-900/20 border border-white/10 rounded-3xl overflow-hidden shadow-2xl shadow-black/50">
-        <AsciiMagnetic speed={speed} />
+        <AsciiMagnetic />
       </div>
 
-      <div className="w-full max-w-lg space-y-8">
-        <div className="space-y-4">
-          <div className="flex justify-between items-center text-xs font-mono uppercase tracking-widest text-zinc-500">
-            <label htmlFor="speed">Animation Speed</label>
-            <span className="text-white">{speed}ms</span>
-          </div>
-          <input
-            id="speed"
-            type="range"
-            min="50"
-            max="1000"
-            step="50"
-            value={speed}
-            onChange={(e) => setSpeed(Number(e.target.value))}
-            className="w-full h-2 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-white hover:accent-zinc-300"
-          />
-        </div>
-      </div>
+      <p className="text-zinc-600 text-xs font-mono">
+        Hover to attract the dots
+      </p>
 
       {/* Code */}
       <div className="w-full max-w-2xl space-y-4">
