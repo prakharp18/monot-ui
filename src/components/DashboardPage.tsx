@@ -121,8 +121,6 @@ export const DashboardPage = () => {
               </div>
             </div>
 
-
-
             {/* Desktop View (Hover Expand) */}
             <div className="hidden md:block">
               <HoverExpand
