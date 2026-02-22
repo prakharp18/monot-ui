@@ -22,13 +22,13 @@ export const CodeBlock = ({ tabs }: CodeBlockProps) => {
   return (
     <div className="w-full rounded-2xl border border-zinc-800 bg-zinc-950 overflow-hidden">
       {/* Tab Bar */}
-      <div className="flex items-center justify-between border-b border-zinc-800 px-4">
-        <div className="flex gap-1">
+      <div className="flex items-center border-b border-zinc-800 px-2 sm:px-4 gap-2">
+        <div className="flex gap-1 overflow-x-auto flex-1 min-w-0 scrollbar-hide">
           {tabs.map((tab, i) => (
             <button
               key={tab.label}
               onClick={() => setActive(i)}
-              className={`px-4 py-3 text-xs font-mono uppercase tracking-widest transition-colors ${
+              className={`px-3 sm:px-4 py-3 text-[10px] sm:text-xs font-mono uppercase tracking-widest transition-colors whitespace-nowrap flex-shrink-0 ${
                 active === i
                   ? 'text-white border-b-2 border-white'
                   : 'text-zinc-600 hover:text-zinc-400'
@@ -41,7 +41,7 @@ export const CodeBlock = ({ tabs }: CodeBlockProps) => {
 
         <button
           onClick={handleCopy}
-          className="px-3 py-1.5 text-[10px] font-mono uppercase tracking-widest rounded-lg border border-zinc-700 text-zinc-400 hover:text-white hover:border-zinc-500 transition-all"
+          className="flex-shrink-0 px-3 py-1.5 text-[10px] font-mono uppercase tracking-widest rounded-lg border border-zinc-700 text-zinc-400 hover:text-white hover:border-zinc-500 transition-all"
         >
           {copied ? '✓ Copied' : 'Copy'}
         </button>
